@@ -1,17 +1,36 @@
 import sys
-from PyQt5.QtWidgets import (QApplication, QMainWindow, QTabWidget, QWidget,
+import sqlite3
+from PyQt5.QtWidgets import (QApplication, QMainWindow, QTabWidget, QWidget, QComboBox,
                              QVBoxLayout, QHBoxLayout, QGridLayout, QLabel, QLineEdit, QPushButton)
-from test_functions import *
+from PyQt5.QtSql import QSqlDatabase, QSqlTableModel
+from PyQt5 import uic
+import test_functions as func
 
 
-class MainWindow(QWidget):
+class EnteryWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        init(self)
+        uic.loadUi('files/ui/entery_window.ui', self)
+        self.reg_pushButton_reg.clicked.connect(func.registration(self))
+        self.ent_pushButton_ent.clicked.connect(func.entery(self))
+
+
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.init()
+
+    def init(self):
+        uic.loadUi('files/ui/main_window.ui', self)
+
+
+def main():
+    ex = MainWindow()
+    ex.show()
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = MainWindow()
+    ex = EnteryWindow()
     ex.show()
     sys.exit(app.exec())
